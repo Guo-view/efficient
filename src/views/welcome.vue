@@ -17,7 +17,11 @@
         router
       >
         // eslint-disable-next-line vue/no-use-v-if-with-v-for
-        <el-submenu :index="item.path" v-for="item in asideList" :key="item.id">
+        <el-menu-item :index="item.path" v-if="!item.isDir">
+          <i class="el-icon-menu"></i>
+          <span slot="title">{{ item.name }}</span>
+        </el-menu-item>
+        <el-submenu :index="item.path" v-else v-for="item in asideList" :key="item.id">
           <template slot="title">
             <i :class="item.icon"></i>
             <span slot="title">{{ item.name }}</span>
@@ -27,10 +31,6 @@
             items.name
           }}</el-menu-item>
         </el-submenu>
-        <el-menu-item :index="item.path">
-          <i class="el-icon-menu"></i>
-          <span slot="title">{{ item.name }}</span>
-        </el-menu-item>
       </el-menu>
     </el-aside>
     <el-container>
