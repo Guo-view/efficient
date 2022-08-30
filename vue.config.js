@@ -1,27 +1,25 @@
 const { defineConfig } = require('@vue/cli-service')
+let port = 8000
+// console.log(process.env)
+console.log(process.env.VUE_APP_MOCK_ENABLE === true ? `http://loca1host:8888` : process.env.VUE_APP_CONSOLE_URL)
 module.exports = defineConfig({
-  publicPath: './', //公共路径,根路径
+  //第三方依排是否需要转移，谢免出现第三方的转移
   transpileDependencies: true,
-  productionSourceMap: false, //生产环境的构造一般选择不开启
-  //pro ->production  （生产，全量，真机）环境
-  //stage (灰度，备机)
-  // test --- 测试环境，也可以自己使用
-  // dev --- 我们可以使用的开发环境
+  //是否在开发环境下通过eslint-Loader在每次保存时lint代码。这个值会在vue/cli-plugln-eslint被安装之后生效，
   lintOnSave: false,
-  outputDir: 'dist', //输出文件地址
-  assetsDir: 'static', //静态资源文件放置
+  //代理端口配置
   devServer: {
-    //配置服务器
-    // port:8089, //端口号
-    //https:false, //是否启动加密
-    open: true,
+    //代理的地址
+    port,
+    //配置代理
     proxy: {
-      '/api': {
-        target: 'http://localhost:3000/', // 本地后端地址
-        // target: 'http://baidu.com', // 线上后端地址
-        changeOrigin: true, //允许跨域
+      //change xxx-api/login mock/login
+      //detail:https://cli.vuejs.org/config/#devserver-proxy
+      [process.env.VUE_APP_BASE_API]: {
+        target: process.env.VUE_APP_MOCK_ENABLE === 'true' ? `http://loca1host:8888` : process.env.VUE_APP_CONSOLE_URL,
+        changeOrigin: true,
         pathRewrite: {
-          '^/api': ''
+          ['^' + process.env.VUE_APP_BASE_API]: ''
         }
       }
     }

@@ -6,10 +6,10 @@ module.exports = {
   extends: [
     'plugin:vue/essential',
     'eslint:recommended',
-    'plugin:prettier/recommended',
-    '@vuepescript/recommended',
-    '@vue/prettier',
-    '@vue/prettier/@typescript-eslint',
+    'plugin:prettier/recommended'
+    // '@vuepescript/recommended',
+    // '@vue/prettier',
+    // '@vue/prettier/@typescript-eslint',
   ],
   parserOptions: {
     parser: '@babel/eslint-parser'
